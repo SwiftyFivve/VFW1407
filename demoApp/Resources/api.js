@@ -42,6 +42,8 @@ var refresh = function() {
 
 	//check row, can not reach inside yet.
 	console.log(row);
+	info.push(row);
+	table.setData(api.info);
 	//Ti.API.debug(cityState);
 	// Ti.API.debug(currentTemp);
 	// Ti.API.debug(heatIndex);
@@ -69,4 +71,4 @@ xhr.send();
 
 console.log(xhr);
 
-exports.refresh = refresh; 
+exports.info = info; 

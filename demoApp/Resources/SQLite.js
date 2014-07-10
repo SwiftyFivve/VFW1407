@@ -4,21 +4,21 @@ var createDatabase = db = Titanium.Database.open('weather');
 
 db.execute('CREATE TABLE IF NOT EXISTS weatherTable (id INTEGER PRIMARY KEY, cityState TEXT, currentTemp TEXT, weather TEXT, icon TEXT)');
 
-var createRows = function() {
-	var newData = [];
-	var rows = db.execute('SELECT * FROM weatherTable');
-	while (rows.isValidRow()) {
-		newData.push({
-			id : rows.fieldByName('id'),
-			cityState : rows.fieldByName('cityState'),
-			currentTemp : rows.fieldByName('currentTemp'),
-			weather : rows.fieldByName('weather'),
-			icon : rows.fieldByName('icon')
-		});
-		rows.next();
-	}
-	return newData;
-};
+// var createRows = function() {
+	// var newData = [];
+	// var rows = db.execute('SELECT * FROM weatherTable');
+	// while (rows.isValidRow()) {
+		// newData.push({
+			// id : rows.fieldByName('id'),
+			// cityState : rows.fieldByName('cityState'),
+			// currentTemp : rows.fieldByName('currentTemp'),
+			// weather : rows.fieldByName('weather'),
+			// icon : rows.fieldByName('icon')
+		// });
+		// rows.next();
+	// }
+	// return newData;
+// };
 
 // var savedResponse = function() {
 	// var info = [];

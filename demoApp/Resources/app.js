@@ -25,4 +25,3 @@ var table = Ti.UI.createTableView();
 mainWindow.add(table);
 
 mainWindow.open();
-SQLite.save();
