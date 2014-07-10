@@ -4,6 +4,13 @@
 
 //wunderground API key = ec864c4dc772cc90
 
+// api require
+var api = require('api');
+//requires sqlite module
+var SQLite = require('SQLite');
+
+//console.log(api);
+
 //main Window
 var mainWindow = Ti.UI.createWindow({
 	layout : 'vertical',
@@ -12,12 +19,10 @@ var mainWindow = Ti.UI.createWindow({
 });
 
 var table = Ti.UI.createTableView();
-// api require
-var api = require('api');
 
-console.log(api.myObj);
+//console.log(api.myObj);
 
 mainWindow.add(table);
 
-
 mainWindow.open();
+SQLite.save();

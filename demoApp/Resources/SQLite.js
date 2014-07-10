@@ -4,20 +4,21 @@ var createDatabase = db = Titanium.Database.open('weather');
 
 db.execute('CREATE TABLE IF NOT EXISTS weatherTable (id INTEGER PRIMARY KEY, cityState TEXT, currentTemp TEXT, weather TEXT, icon TEXT)');
 
-// var createRows = function() {
-	// var newData = [];
-	// var rows = db.execute('SELECT * FROM articleTable');
-	// while (rows.isValidRow()) {
-		// newData.push({
-			// id : rows.fieldByName('id'),
-			// title : rows.fieldByName('title'),
-			// author : rows.fieldByName('author'),
-			// subreddit : rows.fieldByName('subreddit')
-		// });
-		// rows.next();
-	// }
-	// return newData;
-// };
+var createRows = function() {
+	var newData = [];
+	var rows = db.execute('SELECT * FROM weatherTable');
+	while (rows.isValidRow()) {
+		newData.push({
+			id : rows.fieldByName('id'),
+			cityState : rows.fieldByName('cityState'),
+			currentTemp : rows.fieldByName('currentTemp'),
+			weather : rows.fieldByName('weather'),
+			icon : rows.fieldByName('icon')
+		});
+		rows.next();
+	}
+	return newData;
+};
 
 // var savedResponse = function() {
 	// var info = [];
@@ -49,13 +50,13 @@ db.execute('CREATE TABLE IF NOT EXISTS weatherTable (id INTEGER PRIMARY KEY, cit
 // };
 // 
 // savedResponse();
+var api = require('api');
 
-exports.save = function(myObj) {// instead of if ID, if argument.hasOwnProperty (id), as a string update else save new one camelcase
-	if (myObj.hasOwnProperty('id')) {
-		db.execute('UPDATE articleTable SET cityState=?, currentTemp=?, weather=?, icon=? WHERE id=?', myObj.cityState, myObj.currentTemp, myObj.weather, myObj.icon, myObj.id);
-		console.log("Update is firing");
-	} else {
-		db.execute('INSERT INTO articleTable (cityState, currentTemp, weather, icon) VALUES (?,?,?,?)', myObj.cityState, myObj.currentTemp, myObj.weather, myObj.icon);
-		console.log("Update is not firing");
-	}
+exports.save = function() {// instead of if ID, if argument.hasOwnProperty (id), as a string update else save new one camelcase
+	// if (myObj.hasOwnProperty('id')) {
+		// db.execute('UPDATE weatherTable SET cityState=?, currentTemp=?, weather=?, icon=? WHERE id=?', myObj.cityState, myObj.currentTemp, myObj.weather, myObj.icon, myObj.id);
+		// console.log(myObj);
+	// } else {
+		db.execute('INSERT INTO weatherTable (cityState, currentTemp, weather, icon) VALUES (?,?,?,?)', myObj.cityState, myObj.currentTemp, myObj.weather, myObj.icon);
+	// }
 };
