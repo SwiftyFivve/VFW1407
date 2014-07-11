@@ -24,34 +24,44 @@ var refresh = function() {
 	var icon = data.icon_url;
 	
 	//check if varibles are running. They are
-	console.log(cityState);
-	console.log(currentTemp);
-	console.log(heatIndex);
-	console.log(weather);
-	console.log(icon);
+	// console.log(cityState);
+	// console.log(currentTemp);
+	// console.log(heatIndex);
+	// console.log(weather);
+	// console.log(icon);
 	
 	//create row to push data in to.
 	var row = Ti.UI.createTableViewRow({
 		height : '100dp',
 		location : cityState,
-		temp : currentTemp,
+		//temp : currentTemp,
 		heat : heatIndex,
 		weather : weather,
 		icon : icon
 	});
+	
+	var label = Ti.UI.createLabel({
+		text: currentTemp,
+	});
+	
+	row.add(label);
 
 	//check row, can not reach inside yet.
-	console.log(row);
+	//console.log("line 44: " +row.temp);
 	info.push(row);
-	table.setData(api.info);
+	table.setData(info);
+	console.log("line 47: " +info[0].temp);
 	//Ti.API.debug(cityState);
 	// Ti.API.debug(currentTemp);
 	// Ti.API.debug(heatIndex);
 	// Ti.API.debug(weather);
 	// Ti.API.debug(icon);
 	//console.log(myObj);]
+	//return info;
 
 };
+
+	//console.log("line 58: " +info[0].temp);
 
 //Remote info and request
 var remoteError = function() {

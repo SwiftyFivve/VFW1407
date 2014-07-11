@@ -20,7 +20,9 @@ var mainWindow = Ti.UI.createWindow({
 
 var table = Ti.UI.createTableView();
 
-//console.log(api.myObj);
+//table.setData(api.info);
+
+//console.log("line 26: " +api.info[0].temp);
 
 mainWindow.add(table);
 
