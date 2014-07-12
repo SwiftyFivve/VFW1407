@@ -3,65 +3,62 @@ var info = [];
 var json;
 
 //refresh for weather. Add a refresh button that runs this funstion, top right
-var refresh = function() {
+var refresh = function(myObj) {
 	//create object to store all information here to easily display AND save to local storage- Include ID
 
 	var json = JSON.parse(this.responseText);
 	var data = json.current_observation;
 
-	// var myObj = {
-	// cityState : data.display_location.full,
-	// currentTemp : data.temperature_string,
-	// heatIndex : data.heat_index_string,
-	// weather : data.weather,
-	// icon : data.icon_url
-	// };
+	var myObj = {
+		cityState : data.display_location.full,
+		currentTemp : data.temperature_string,
+		//heatIndex : data.heat_index_string,
+		weather : data.weather,
+		icon : data.icon_url
+	};
 
-	var cityState = data.display_location.full;
-	var currentTemp = data.temperature_string;
-	var heatIndex = data.heat_index_string;
-	var weather = data.weather;
-	var icon = data.icon_url;
+	var locationLabel = Ti.UI.createLabel({
+		text : myObj.cityState,
+	});
+
+	var tempLabel = Ti.UI.createLabel({
+		text : myObj.currentTemp,
+	});
+
+	var weatherLabel = Ti.UI.createLabel({
+		text : myObj.weather,
+	});
+
+	var iconLabel = Ti.UI.createLabel({
+		text : myObj.icon,
+	});
 	
-	//check if varibles are running. They are
-	// console.log(cityState);
-	// console.log(currentTemp);
-	// console.log(heatIndex);
-	// console.log(weather);
-	// console.log(icon);
+	var allLabels = [locationLabel, tempLabel, weatherLabel, iconLabel];
+	for (i=0; i<allLabels; i++);
 	
-	//create row to push data in to.
 	var row = Ti.UI.createTableViewRow({
-		height : '100dp',
-		location : cityState,
-		//temp : currentTemp,
-		heat : heatIndex,
-		weather : weather,
-		icon : icon
+		text : allLabels[i]
 	});
 	
-	var label = Ti.UI.createLabel({
-		text: currentTemp,
-	});
+	console.log('line 43 ' + row.text[0]);
 	
-	row.add(label);
-
-	//check row, can not reach inside yet.
-	//console.log("line 44: " +row.temp);
+	console.log('line 45 ' + info[0]);
+	
 	info.push(row);
-	table.setData(info);
-	console.log("line 47: " +info[0].temp);
-	//Ti.API.debug(cityState);
-	// Ti.API.debug(currentTemp);
-	// Ti.API.debug(heatIndex);
-	// Ti.API.debug(weather);
-	// Ti.API.debug(icon);
-	//console.log(myObj);]
-	//return info;
-
+	table.setData(api.info);
 };
 
-	//console.log("line 58: " +info[0].temp);
+//create this row and labels in app.js, within a function. call for the object with remote data to that function
+
+//create row to push data in to.
+
+// row.add(label);//Ti.API.debug(cityState);
+// Ti.API.debug(currentTemp);
+// Ti.API.debug(heatIndex);
+// Ti.API.debug(weather);
+// Ti.API.debug(icon);
+//console.log(myObj);]
+//return info;
 
 //Remote info and request
 var remoteError = function() {
@@ -79,6 +76,4 @@ var xhr = Ti.Network.createHTTPClient({
 xhr.open("GET", "http://api.wunderground.com/api/ec864c4dc772cc90/conditions/q/IA/Garner.json");
 xhr.send();
 
-console.log(xhr);
-
-exports.info = info; 
+exports.info = info;
