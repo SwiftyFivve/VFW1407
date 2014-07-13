@@ -15,25 +15,11 @@ var SQLite = require('SQLite');
 var mainWindow = Ti.UI.createWindow({
 	layout : 'vertical',
 	title : 'Weather +',
-	backgroundColor : 'white'
+	backgroundImage : '/img/background1.jpg'
 });
-
-var table = Ti.UI.createTableView();
-
-var createLabels = function(myObj){
-	for(i=0; i<myObj; i++);
-	
-	var loopLabel = Ti.UI.createLabel({
-		//text : myObj[i],
-	});
-	
-};
-
 
 //table.setData(api.info);
 
 //console.log("line 26: " +api.info[0].temp);
-
-mainWindow.add(table);
 
 mainWindow.open();

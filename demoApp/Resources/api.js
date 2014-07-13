@@ -1,7 +1,3 @@
-var info = [];
-
-var json;
-
 //refresh for weather. Add a refresh button that runs this funstion, top right
 var refresh = function(myObj) {
 	//create object to store all information here to easily display AND save to local storage- Include ID
@@ -19,46 +15,87 @@ var refresh = function(myObj) {
 
 	var locationLabel = Ti.UI.createLabel({
 		text : myObj.cityState,
+		color : 'black',
+		top : 0,
+		font : {
+			fontSize : 48
+		},
 	});
+
+	var locationView = Ti.UI.createView({
+		//backgroundColor : 'gray',
+		top : '110dp',
+		width : 'auto',
+		height : 50
+	});
+
+	locationView.add(locationLabel);
+
+	mainWindow.add(locationView);
+	
+	// var circleLabel = Ti.UI.createImageView({
+		// image : '/img/circle.jpg',
+		// height : '300p',
+		// width : '300p',
+	// });
+
+	var iconLabel = Ti.UI.createImageView({
+		image : myObj.icon,
+		height : '80',
+		width : '80',
+		//left : '100',
+		top: '30'
+	});
+
+	mainWindow.add(iconLabel);
+	
 
 	var tempLabel = Ti.UI.createLabel({
 		text : myObj.currentTemp,
+		color : 'black',
+		top : 0,
+		font : {
+			fontSize : 48
+		},
+	}); 
+	
+	var tempView = Ti.UI.createView({
+		//backgroundColor : 'gray',
+		top : '0dp',
+		width : 'auto',
+		height : 50
 	});
+	
+	tempView.add(tempLabel);
+	
+	mainWindow.add(tempView);
+	
 
 	var weatherLabel = Ti.UI.createLabel({
 		text : myObj.weather,
+		color : 'black',
+		top : 0,
+		font : {
+			fontSize : 48
+		},
+	}); 
+	
+	var weatherView = Ti.UI.createView({
+		//backgroundColor : 'gray',
+		top : '20dp',
+		width : 'auto',
+		height : 'auto'
 	});
+	
+	weatherView.add(weatherLabel);
+	
+	mainWindow.add(weatherView);
 
-	var iconLabel = Ti.UI.createLabel({
-		text : myObj.icon,
-	});
-	
-	var allLabels = [locationLabel, tempLabel, weatherLabel, iconLabel];
-	for (i=0; i<allLabels; i++);
-	
-	var row = Ti.UI.createTableViewRow({
-		text : allLabels[i]
-	});
-	
-	console.log('line 43 ' + row.text[0]);
-	
-	console.log('line 45 ' + info[0]);
-	
-	info.push(row);
-	table.setData(api.info);
 };
 
 //create this row and labels in app.js, within a function. call for the object with remote data to that function
 
 //create row to push data in to.
-
-// row.add(label);//Ti.API.debug(cityState);
-// Ti.API.debug(currentTemp);
-// Ti.API.debug(heatIndex);
-// Ti.API.debug(weather);
-// Ti.API.debug(icon);
-//console.log(myObj);]
-//return info;
 
 //Remote info and request
 var remoteError = function() {
@@ -74,6 +111,4 @@ var xhr = Ti.Network.createHTTPClient({
 	timeout : 5000
 });
 xhr.open("GET", "http://api.wunderground.com/api/ec864c4dc772cc90/conditions/q/IA/Garner.json");
-xhr.send();
-
-exports.info = info;
+xhr.send(); 
