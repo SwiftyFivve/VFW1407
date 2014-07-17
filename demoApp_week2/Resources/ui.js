@@ -8,17 +8,11 @@ var tabGroup = Ti.UI.createTabGroup({
 	tabsBackgroundColor : '#D8D8D8',
 });
 
-var customFont = 'Edwardian Script ITC';
-if (Ti.Platform.osname == 'android') {
-	// on Android, use the "base name" of the file (name without extension)
-	customFont = 'EdwardianScriptITC';
-}
 var titleLabel = Ti.UI.createLabel({
 	text : "Jordan's Location Tracker and Really Long Title to Take Up Space!",
 	font : {
 		fontSize : "50dp",
-		fontWeight : "bold",
-		fontFamily : customFont
+		fontWeight : "bold"
 	},
 	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
 	width : '600sp'
@@ -29,7 +23,7 @@ var titleView = Ti.UI.createView({
 	height : '290dp',
 	width : '700sp',
 	backgroundColor : '#F6E3CE',
-	borderWidth : "15dp"
+	borderWidth : "10dp"
 
 });
 
@@ -73,6 +67,26 @@ var tab1 = Ti.UI.createTab({
 tabGroup.addTab(tab1);
 
 //Favourites Window
+var favLabel = Ti.UI.createLabel({
+	text : "The Favorites Page, also With a Long Title to Fill Space",
+	font : {
+		fontSize : "50dp",
+		fontWeight : "bold",
+	},
+	textAlign : Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	width : '600sp'
+});
+
+var favView = Ti.UI.createView({
+	top : '20dp',
+	height : '290dp',
+	width : '700sp',
+	backgroundColor : '#F6E3CE',
+	borderWidth : "10dp"
+
+});
+
+favView.add(favLabel);
 
 var favWindow = Ti.UI.createWindow({
 	layout : 'vertical',
@@ -80,9 +94,10 @@ var favWindow = Ti.UI.createWindow({
 	backgroundColor : '#DF0101',
 	layout : 'vertical',
 });
+favWindow.add(favView);
 
 var favHolder = Ti.UI.createView({
-	top : "400sp",
+	top : "20sp",
 	height : "600sp",
 	width : "600sp",
 	borderColor : 'white',
@@ -193,13 +208,10 @@ exports.labels = function(json) {
 		table.setData(data);
 	};
 };
-// console.log(myView);
-//ui.win.add(myView);
 table.addEventListener('click', function(e) {
 	var label = e.source.data.name;
-	//var item = label.getItemAt();
 	//console.log(e.source.data.number);
-	console.log(e.source.data.name);
+	console.log(e.source.data);
 	Cloud.runCloud(label);
 	SQLite.save(label);
 	// on click run SQLite and Cloud

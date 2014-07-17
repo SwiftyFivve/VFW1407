@@ -66,5 +66,4 @@ exports.save = function(label) {
 	//close db
 	//cloudData.save(name)
 	//make new file for cloud functions
-
 };
