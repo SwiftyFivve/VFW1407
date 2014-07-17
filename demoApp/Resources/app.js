@@ -9,17 +9,4 @@ var api = require('api');
 //requires sqlite module
 var SQLite = require('SQLite');
 
-//console.log(api);
-
-//main Window
-var mainWindow = Ti.UI.createWindow({
-	layout : 'vertical',
-	title : 'Weather +',
-	backgroundImage : '/img/background1.jpg'
-});
-
-//table.setData(api.info);
-
-//console.log("line 26: " +api.info[0].temp);
-
-mainWindow.open();
+SQLite.mainWindow.open();
