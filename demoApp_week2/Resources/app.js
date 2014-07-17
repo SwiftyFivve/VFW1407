@@ -9,6 +9,14 @@
 var Cloud = require('ti.cloud');
 Cloud.debug = true; //as we are in Development mode
 
+if(Titanium.Network.networkType == Titanium.Network.NETWORK_NONE){ 
+var alertDialog = Titanium.UI.createAlertDialog({
+              title: 'WARNING!',
+              message: 'Your device is not online.',
+              buttonNames: ['OK']
+            });
+            alertDialog.show();
+}else{
 
 Cloud.Users.login({
     login: 'demoadmin',
@@ -32,15 +40,14 @@ var ui = require('ui');
 var geo = require('geo');
 var api = require('api');
 
-
 geo.runGeo();
 
 
-	
-	
-	
-ui.win.add(ui.myView);
-ui.win.open();
+//ui.win.add(ui.myView);
+//
+ui.tabGroup.open(); 
+
+};
 
 //Need Run Geo function that runs on event listener
 

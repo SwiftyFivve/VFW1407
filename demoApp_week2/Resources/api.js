@@ -1,13 +1,12 @@
 //var SQLite = require('SQLite');
 
-var info = [];
-
 var runApi = function(lat, lng) {
 	var remoteResponse = function() {
 		console.log('Sucessful network');
 		Ti.API.debug(this.responseText);
 		json = JSON.parse(this.responseText);
 		ui.labels(json);
+		console.log('Line 9: ' + lat +'long: ' + lng);
 	};
 	//Remote info and request
 	var remoteError = function(e) {

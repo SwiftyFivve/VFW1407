@@ -3,7 +3,7 @@
 	// width : 100
 // });
 
-var runGeo = function(ev){
+var runGeo = function(){
 	Ti.Geolocation.purpose = "Your location is needed to gather lat/long coords."; 
 	Ti.Geolocation.getCurrentPosition(function(e){
 		var lat = e.coords.latitude;
