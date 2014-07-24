@@ -1,3 +1,5 @@
+//finsihed
+
 var zipReverse = function(myObj, miles) {
 
 	Titanium.Geolocation.reverseGeocoder(myObj.lat, myObj.lng, function(evt) {

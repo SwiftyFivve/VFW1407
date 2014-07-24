@@ -1,3 +1,5 @@
+//get a real logo
+
 var mainWindow = Ti.UI.createWindow({
 	backgroundImage : '/img/background.jpg',
 	//layout : 'vertical'
@@ -18,7 +20,7 @@ var logo = Ti.UI.createImageView({
 mainWindow.add(logo);
 
 var searchBar = Ti.UI.createTextField({
-	width : '250dp',
+	width : '25%',
 	height : '30dp',
 	top : '40%',
 	borderStyle : Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
@@ -91,7 +93,6 @@ submitButton.addEventListener('click', function() {
 	if (searchBar.value === '') {
 		console.log('Line 80: Miles = ' + miles);
 		geo.runGeo(miles);
-		console.log("Line 40: "+table.listView);
 	} else {
 		console.log('Line 84: Miles = ' + miles);
 		console.log('Line 85: ' + searchBar.value);

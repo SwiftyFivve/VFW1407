@@ -1,6 +1,6 @@
-exports.runCloud = function(label) {
+exports.runCloud = function(title) {
 	Cloud.Places.create({
-		name : label,
+		name : title,
 		state : 'California',
 		website : 'http://www.appcelerator.com'
 	}, function(e) {

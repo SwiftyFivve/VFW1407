@@ -1,3 +1,5 @@
+//organize these rows
+
 var tableData = [];
 
 var table = Ti.UI.createTableView();
@@ -18,6 +20,7 @@ var settingTable = function() {
 var runTable = function(dataObj) {
 	//console.log('Did this Double?: ' + dataObj.title);
 
+	//organize these rows
 	var data = {
 		title : dataObj.title,
 		time : dataObj.time,
@@ -31,10 +34,14 @@ var runTable = function(dataObj) {
 
 	var title = Ti.UI.createLabel({
 		text : data.title,
+		top : '2%',
+		left : '2%'
 
 	});
 	var time = Ti.UI.createLabel({
 		text : data.time,
+		top : '50%',
+		left : '2%'
 
 	});
 	var venue = Ti.UI.createLabel({
@@ -54,7 +61,7 @@ var runTable = function(dataObj) {
 
 	});
 	var photo = Ti.UI.createImageView({
-		img : "" + data.photo + "",
+		img : data.photo,
 	});
 	//console.log('Line 47: ' + title.text);
 
@@ -65,21 +72,21 @@ var runTable = function(dataObj) {
 		height : 100,
 		data : {
 			title : title.text,
-			// time : time.text,
-			// venue : venue.text,
-			// city : city.text,
-			// state : state.text,
-			// zipcode : zipcode.text,
-			// photo : photo.img
+			time : time.text,
+			venue : venue.text,
+			city : city.text,
+			state : state.text,
+			zipcode : zipcode.text,
+			photo : photo.img
 		},
 	});
 	row.add(title);
-	// row.add(time);
-	// row.add(venue);
-	// row.add(city);
-	// row.add(state);
-	// row.add(zipcode);
-	// row.add(photo);
+	row.add(time);
+	row.add(venue);
+	row.add(city);
+	row.add(state);
+	row.add(zipcode);
+	row.add(photo);
 	
 	tableData.push(row);
 	settingTable();
@@ -88,8 +95,8 @@ var runTable = function(dataObj) {
 var infoPage = require('infoPage');
 
 table.addEventListener('click', function(e) {
-	var labels = e.source.data;
-	console.log(e.rowData);
+	var labels = e.rowData.data;
+	console.log(e.rowData.data.title);
 	infoPage.detailPage(labels);
 });
 
