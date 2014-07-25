@@ -6,7 +6,8 @@ var table = Ti.UI.createTableView();
 
 var tableHolder = Ti.UI.createView({
 	height : '600sp',
-	width : '600sp'
+	width : '600sp',
+	top : '800sp'
 });
 
 var ui = require('ui');
@@ -14,6 +15,12 @@ var ui = require('ui');
 var settingTable = function() {
 	table.setData(tableData);
 	tableHolder.add(table);
+	var t1 = Ti.UI.create2DMatrix();
+	t1 = t1.translate(0, -500);
+	var a1 = Ti.UI.createAnimation();
+	a1.transform = t1;
+	a1.duration = 1800;
+	tableHolder.animate(a1);
 	ui.mainWindow.add(tableHolder);
 };
 
@@ -25,6 +32,7 @@ var runTable = function(dataObj) {
 		title : dataObj.title,
 		time : dataObj.time,
 		venue : dataObj.venue,
+		address : dataObj.address,
 		city : dataObj.city,
 		state : dataObj.state,
 		zipCode : dataObj.zipcode,
@@ -34,7 +42,7 @@ var runTable = function(dataObj) {
 
 	var title = Ti.UI.createLabel({
 		text : data.title,
-		top : '2%',
+		top : '5%',
 		left : '2%'
 
 	});
@@ -46,14 +54,26 @@ var runTable = function(dataObj) {
 	});
 	var venue = Ti.UI.createLabel({
 		text : data.venue,
+		top : '5%',
+		right : '2%'
+
+	});
+	var address = Ti.UI.createLabel({
+		text : data.address,
+		top : '25%',
+		right : '2%'
 
 	});
 	var city = Ti.UI.createLabel({
-		text : data.city,
+		text : data.city + ", ",
+		top : '45%',
+		right : '6%'
 
 	});
 	var state = Ti.UI.createLabel({
 		text : data.state,
+		top : '45%',
+		right : '2%'
 
 	});
 	var zipcode = Ti.UI.createLabel({
@@ -74,6 +94,7 @@ var runTable = function(dataObj) {
 			title : title.text,
 			time : time.text,
 			venue : venue.text,
+			address : address.text,
 			city : city.text,
 			state : state.text,
 			zipcode : zipcode.text,
@@ -83,6 +104,7 @@ var runTable = function(dataObj) {
 	row.add(title);
 	row.add(time);
 	row.add(venue);
+	row.add(address);
 	row.add(city);
 	row.add(state);
 	row.add(zipcode);

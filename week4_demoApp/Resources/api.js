@@ -14,13 +14,15 @@ var runApi = function(zip, miles) {
 			var dataObj = {
 				title : events[i].title,
 				time : events[i].start_time,
-				venue : events[i].venue_address,
-				city : events[i].city,
+				venue : events[i].venue_name,
+				address : events[i].venue_address,
+				city : events[i].city_name,
 				state : events[i].region_abbr,
-				zipCode : events[i].postal_code,
+				zipCode : events[i].zipcode,
 				descrip : events[i].description,
 				url : null
 			};
+			console.log('Line 24: '+dataObj.zipcode);
 			//grab the photos real URL
 			if (photo === null) {
 				dataObj.url = '/img/noImage.png';

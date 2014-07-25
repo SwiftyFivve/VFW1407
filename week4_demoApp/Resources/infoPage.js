@@ -29,7 +29,14 @@ var detailPage = function(labels) {
 	backButton.addEventListener('click', function() {
 		tabGroup.close();
 		//fix this
-		infoWindow.remove(logo, titleLabel, timeLabel, venueLabel, cityLabel, stateLabel, zipcodeLabel, photoView);
+		infoWindow.remove(logo); 
+		infoWindow.remove(titleLabel); 
+		infoWindow.remove(timeLabel); 
+		infoWindow.remove(venueLabel); 
+		infoWindow.remove(cityLabel); 
+		infoWindow.remove(stateLabel); 
+		infoWindow.remove(zipcodeLabel); 
+		infoWindow.remove(photoView);
 	});
 	infoWindow.add(backButton);
 
