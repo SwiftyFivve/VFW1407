@@ -1,7 +1,10 @@
-exports.runCloud = function(title) {
+exports.runCloud = function(saveData) {
 	Cloud.Places.create({
-		name : title,
-		state : 'California',
+		name : saveData.title,
+		time : saveData.time,
+		venue : saveData.venue,
+		address : saveData.address,
+		state : saveData.city,
 		website : 'http://www.appcelerator.com'
 	}, function(e) {
 		if (e.success) {

@@ -1,23 +1,45 @@
 //finsihed
 
-var zipReverse = function(myObj, miles) {
+var zip;
+
+var setZip = function(zipX){
+	zip = zipX;
+};
+
+exports.getZip = function(){
+	return zip;
+};
+
+var zipReverse = function(myObj) {
 
 	Titanium.Geolocation.reverseGeocoder(myObj.lat, myObj.lng, function(evt) {
 		//address = JSON.stringify(evt);
+		
 		if (Ti.Platform.osname === "android") {
-			var zip = evt.places[0].postalCode;
+			zip = evt.places[0].postalCode;
 		} else {
-			var zip = evt.places[0].zipcode;
+			zip = evt.places[0].zipcode;
 		}
 		Ti.API.info("reverse geolocation result = " + JSON.stringify(evt));
 		alert('zipcode = ' + zip);
-		api.runApi(zip, miles);
+		setZip(zip);
 	});
 
 };
+//reverse Zip end
 
-var runGeo = function(miles) {
-	console.log("Line 18: Miles = "+ miles);
+var location = {};
+
+var setLocation = function(latX, lngX){
+	location = latX +", "+ lngX;
+	console.log('geo Line 35: '+ location);
+};
+
+exports.getLocation = function(){
+	return location;
+};
+
+var runGeo = function() {
 	Ti.Geolocation.purpose = "Your location is needed to gather lat/long coords.";
 	Ti.Geolocation.getCurrentPosition(function(e) {
 		if (Ti.Platform.osname === "android") {
@@ -31,8 +53,8 @@ var runGeo = function(miles) {
 				lng : e.coords.longitude
 			};
 		}
-		//console.log("Line 33: Lat. " + myObj.lat + " Long. " + myObj.lng);
-		zipReverse(myObj, miles);
+		zipReverse(myObj);
+		setLocation(myObj.lat, myObj.lng);
 	});
 	//getCurrentPosition closing
 };

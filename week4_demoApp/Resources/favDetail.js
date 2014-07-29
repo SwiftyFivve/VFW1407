@@ -1,16 +1,6 @@
-//work on tab background, removing details label, add descrip. organize. multiple tabs opening
-// organize favourites table
-
-var tabGroup = Ti.UI.createTabGroup({
-	// backgroundColor : '#CEE3F6',
-	// tabsBackgroundColor : '#D8D8D8',
-	//tabsBackgroundImage : tabView
-});
-
-var infoWindow = Ti.UI.createWindow({
+var mainWindow = Ti.UI.createWindow({
 	backgroundImage : '/img/background.jpg',
 	layout : 'veritcal',
-	leftNavButtons : [],
 	titleAttributes : {
 		color : 'black',
 		font : {
@@ -29,11 +19,13 @@ var infoWindow = Ti.UI.createWindow({
 
 var dataBackground = Ti.UI.createScrollView({
 	top : '0%',
-	width : '90%',
-	height : '150%',
+	width : '100%',
+	height : '100%',
 	backgroundColor : '#F2F2F2',
-	showVerticalScrollIndicator : true
+	showVerticalScrollIndicator : true,
 });
+
+// var titleBox =
 
 var backButton = Ti.UI.createButton({
 	title : '< Back',
@@ -43,15 +35,9 @@ var backButton = Ti.UI.createButton({
 	width : '15%'
 });
 
-var testButton = Ti.UI.createButton({
-	systemButton : Titanium.UI.iPhone.SystemButton.ACTIVITY,
-	top : '50%',
-});
-dataBackground.add(testButton);
-
 var timeBox = Ti.UI.createView({
 	top : '0%',
-	height : '5%',
+	height : '10%',
 	width : 'auto',
 	// borderWidth : '1dp',
 	// borderColor : 'black',
@@ -70,7 +56,7 @@ var photoBox = Ti.UI.createView({
 });
 dataBackground.add(photoBox);
 
-infoWindow.add(dataBackground);
+mainWindow.add(dataBackground);
 
 //Save button starts
 var saveButton = Ti.UI.createButton({
@@ -109,9 +95,9 @@ var mapsButton = Ti.UI.createButton({
 
 var mapIcon = Ti.UI.createImageView({
 	image : 'img/map2.png',
-	height : '50%',
+	height : '60%',
 	width : '15%',
-	left : '7%'
+	left : '4.5%'
 });
 mapsButton.add(mapIcon);
 
@@ -140,7 +126,7 @@ var tixIcon = Ti.UI.createImageView({
 	image : 'img/ticket2.png',
 	height : '69%',
 	width : '23%',
-	left : '5%'
+	left : '4.5%'
 });
 ticketsButton.add(tixIcon);
 
@@ -151,7 +137,7 @@ var tickets = Ti.UI.createLabel({
 		fontWeight : 'bold',
 		fontSize : '20dp'
 	},
-	right : '27%'
+	right : '25%'
 });
 ticketsButton.add(tickets);
 //ticket button ends
@@ -200,39 +186,13 @@ var descripSection = Ti.UI.createView({
 });
 descripSection.add(decripTitle);
 dataBackground.add(descripSection);
-//End Sections
 
-var tab1 = Ti.UI.createTab({
-	title : "Details",
-	window : infoWindow,
-	//icon : Ti.UI.iPhone.SystemIcon.MOST_RECENT,
-	transitionAnimation : true
-});
-tabGroup.addTab(tab1);
-
-var favourites = Ti.UI.createWindow({
-	backgroundImage : '/img/background.jpg',
-});
-
-//creates tab2 to open favWindow/Favorites page
-var tab2 = Ti.UI.createTab({
-	title : "Favorites",
-	window : favourites,
-	//icon : Ti.UI.iPhone.SystemIcon.FAVORITES,
-	transitionAnimation : true
-});
-tabGroup.addTab(tab2);
-
-var SQLite = require('SQLite');
-var cloud = require('cloud');
-
-var detailPage = function(labels) {
-
-	infoWindow.title = labels.title;
-	//Important console.log to track the movement of API data
-	//console.log('Line 61: ' + labels.zipcode);
+var favDetailFunc = function(data) {
+	
+	console.log('Line 190: '+data.photo);
+	
 	backButton.addEventListener('click', function() {
-		tabGroup.close();
+		mainWindow.close();
 		timeBox.remove(timeLabel);
 		photoBox.remove(photoView);
 		saveButton.remove(saved);
@@ -255,7 +215,7 @@ var detailPage = function(labels) {
 	timeBox.add(backButton);
 
 	var timeLabel = Ti.UI.createLabel({
-		text : labels.time,
+		text : data.time,
 		color : 'white',
 		top : '40%',
 		font : {
@@ -265,7 +225,7 @@ var detailPage = function(labels) {
 	timeBox.add(timeLabel);
 
 	var photoView = Ti.UI.createImageView({
-		image : labels.photo,
+		image : data.photo,
 		height : '200dp',
 		width : '200dp',
 	});
@@ -288,7 +248,7 @@ var detailPage = function(labels) {
 	saveButton.addEventListener('click', function() {
 		var dialog = Ti.UI.createAlertDialog({
 			confirm : 0,
-			buttonNames : ['Save', 'Cancel'],
+			buttonNames : ['Open', 'Cancel'],
 			message : 'Would you like to Save "' + labels.title + '"?',
 			title : 'Save Event'
 		});
@@ -297,12 +257,10 @@ var detailPage = function(labels) {
 				var saveData = {
 					title : labels.title,
 					time : timeLabel.text,
-					photo : labels.photo,
 					venue : venueLabel.text,
 					address : addressLabel.text,
 					city : cityLabel.text,
-					descrip : descripLabel.text,
-					site : labels.site
+					descrip : descripLabel.text
 				};
 				saveButton.remove(attending);
 				saveButton.add(saved);
@@ -316,8 +274,6 @@ var detailPage = function(labels) {
 	});
 	dataBackground.add(saveButton);
 	//End saveButton clickEvent
-	
-	favourites.add(SQLite.favTable);
 
 	//Start mapsButton clickEvent
 	mapsButton.addEventListener('click', function() {
@@ -367,7 +323,7 @@ var detailPage = function(labels) {
 	});
 
 	var venueLabel = Ti.UI.createLabel({
-		text : labels.venue,
+		text : data.venue,
 		color : 'black',
 		font : {
 			fontSize : '20dp',
@@ -378,7 +334,7 @@ var detailPage = function(labels) {
 	addressView.add(venueLabel);
 
 	var addressLabel = Ti.UI.createLabel({
-		text : labels.address,
+		text : data.address,
 		color : 'black',
 		font : {
 			fontSize : '20dp'
@@ -388,7 +344,7 @@ var detailPage = function(labels) {
 	addressView.add(addressLabel);
 
 	var cityLabel = Ti.UI.createLabel({
-		text : labels.city + labels.state + " " + labels.zipcode,
+		text : data.city,
 		color : 'black',
 		font : {
 			fontSize : '20dp'
@@ -400,20 +356,19 @@ var detailPage = function(labels) {
 	dataBackground.add(addressView);
 	//Start forming address for display
 
-	var descripLabel = Ti.UI.createLabel({
-		text : labels.descrip,
-		color : 'black',
-		top : '40%',
-		left : '3%',
-		font : {
-			fontSize : '20dp',
-		}
-	});
-	dataBackground.add(descripLabel);
+	// var descripLabel = Ti.UI.createLabel({
+		// text : labels.descrip,
+		// color : 'black',
+		// top : '40%',
+		// left : '3%',
+		// font : {
+			// fontSize : '20dp',
+		// }
+	// });
+	// dataBackground.add(descripLabel);
+	
+	mainWindow.open();
 
-	//end of details page
+}; 
 
-	tabGroup.open();
-};
-
-exports.detailPage = detailPage;
+exports.favDetailFunc = favDetailFunc;

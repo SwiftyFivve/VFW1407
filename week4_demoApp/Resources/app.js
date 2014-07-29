@@ -8,7 +8,7 @@
 var Cloud = require('ti.cloud');
 Cloud.debug = true; //as we are in Development mode
 
-if(Titanium.Network.networkType == Titanium.Network.NETWORK_NONE){ 
+if(Titanium.Network.networkType === Titanium.Network.NETWORK_NONE){ 
 var alertDialog = Titanium.UI.createAlertDialog({
               title: 'WARNING!',
               message: 'Your device is not online.',
