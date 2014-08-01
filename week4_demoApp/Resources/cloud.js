@@ -1,6 +1,7 @@
 exports.runCloud = function(saveData) {
 	Cloud.Places.create({
 		name : saveData.title,
+		day : saveData.day,
 		time : saveData.time,
 		venue : saveData.venue,
 		address : saveData.address,

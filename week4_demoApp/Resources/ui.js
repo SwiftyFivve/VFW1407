@@ -6,15 +6,27 @@ var mainWindow = Ti.UI.createWindow({
 });
 
 var logo = Ti.UI.createImageView({
-	image : 'img/rocknrollpetrock2.png',
-	top : '23%',
-	height : '15%',
-	width : '33%'
+	image : 'img/logoPlaceholder.png',
+	top : '15%',
+	height : '30%',
+	width : '72%',
+	right : '14.75%'
 });
 
 mainWindow.add(logo);
 
 //boolean remove table from main window
+var squareBox = Ti.UI.createView({
+	height : '17%',
+	width : '40%',
+	backgroundColor : '#FAAC58',
+	top : '38.5%',
+	borderRadius : '20dp',
+	borderWidth : '2dp',
+	borderColor : 'white',
+	opacity : 0.5
+});
+mainWindow.add(squareBox);
 
 var searchBar = Ti.UI.createTextField({
 	width : '33%',

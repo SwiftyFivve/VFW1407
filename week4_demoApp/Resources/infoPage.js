@@ -10,7 +10,6 @@ var tabGroup = Ti.UI.createTabGroup({
 var infoWindow = Ti.UI.createWindow({
 	backgroundImage : '/img/background.jpg',
 	layout : 'veritcal',
-	leftNavButtons : [],
 	titleAttributes : {
 		color : 'black',
 		font : {
@@ -30,37 +29,36 @@ var infoWindow = Ti.UI.createWindow({
 var dataBackground = Ti.UI.createScrollView({
 	top : '0%',
 	width : '90%',
-	height : '150%',
+	height : '100%',
 	backgroundColor : '#F2F2F2',
 	showVerticalScrollIndicator : true
 });
 
+var backImg = Ti.UI.createImageView({
+	image : 'img/back.png'
+});
+
 var backButton = Ti.UI.createButton({
-	title : '< Back',
-	top : '15%',
+	top : '20%',
 	left : '0%',
-	height : '10%',
-	width : '15%'
+	height : '70%',
+	width : '10%',
 });
 
-var testButton = Ti.UI.createButton({
-	systemButton : Titanium.UI.iPhone.SystemButton.ACTIVITY,
-	top : '50%',
-});
-dataBackground.add(testButton);
+backButton.add(backImg);
 
-var timeBox = Ti.UI.createView({
+var dayBox = Ti.UI.createView({
 	top : '0%',
-	height : '5%',
+	height : '8%',
 	width : 'auto',
 	// borderWidth : '1dp',
 	// borderColor : 'black',
 	backgroundColor : '#FAAC58'
 });
-dataBackground.add(timeBox);
+dataBackground.add(dayBox);
 
 var photoBox = Ti.UI.createView({
-	top : '7%',
+	top : '13%',
 	height : '200dp',
 	width : '200dp',
 	// borderWidth : '1dp',
@@ -71,90 +69,6 @@ var photoBox = Ti.UI.createView({
 dataBackground.add(photoBox);
 
 infoWindow.add(dataBackground);
-
-//Save button starts
-var saveButton = Ti.UI.createButton({
-	backgroundImage : 'img/box2.png',
-	top : '6%',
-	width : '30%',
-	height : '5%',
-	right : '9%'
-});
-
-var check = Ti.UI.createImageView({
-	image : 'img/check2.png'
-});
-saveButton.add(check);
-
-var attending = Ti.UI.createLabel({
-	text : "I'm Attending",
-	color : 'white',
-	font : {
-		fontWeight : 'bold',
-		fontSize : '20dp'
-	},
-	right : '10%'
-});
-saveButton.add(attending);
-//save button ends
-
-//open in Maps starts
-var mapsButton = Ti.UI.createButton({
-	backgroundImage : 'img/box2.png',
-	top : '11.5%',
-	width : '30%',
-	height : '5%',
-	right : '9%'
-});
-
-var mapIcon = Ti.UI.createImageView({
-	image : 'img/map2.png',
-	height : '50%',
-	width : '15%',
-	left : '7%'
-});
-mapsButton.add(mapIcon);
-
-var map = Ti.UI.createLabel({
-	text : "Open Map",
-	color : 'white',
-	font : {
-		fontWeight : 'bold',
-		fontSize : '20dp'
-	},
-	right : '20%'
-});
-mapsButton.add(map);
-//open in maps ends
-
-//ticket button starts
-var ticketsButton = Ti.UI.createButton({
-	backgroundImage : 'img/box2.png',
-	top : '17%',
-	width : '30%',
-	height : '5%',
-	right : '9%'
-});
-
-var tixIcon = Ti.UI.createImageView({
-	image : 'img/ticket2.png',
-	height : '69%',
-	width : '23%',
-	left : '5%'
-});
-ticketsButton.add(tixIcon);
-
-var tickets = Ti.UI.createLabel({
-	text : "Tickets",
-	color : 'white',
-	font : {
-		fontWeight : 'bold',
-		fontSize : '20dp'
-	},
-	right : '27%'
-});
-ticketsButton.add(tickets);
-//ticket button ends
 
 //Sections Begin
 var venueSecLabel = Ti.UI.createLabel({
@@ -171,7 +85,7 @@ var venueSection = Ti.UI.createView({
 	//add title attributes
 	height : '3%',
 	width : 'auto',
-	top : '25%',
+	top : '40%',
 	// borderWidth : '1dp',
 	// borderColor : 'black',
 	backgroundColor : 'white',
@@ -193,7 +107,7 @@ var descripSection = Ti.UI.createView({
 	//add title attributes
 	height : '3%',
 	width : 'auto',
-	top : '35%',
+	top : '55%',
 	// borderWidth : '1dp',
 	// borderColor : 'black',
 	backgroundColor : 'white',
@@ -212,6 +126,21 @@ tabGroup.addTab(tab1);
 
 var favourites = Ti.UI.createWindow({
 	backgroundImage : '/img/background.jpg',
+	title : 'Favorites',
+	titleAttributes : {
+		color : 'black',
+		font : {
+			fontFamily : 'Snell Roundhand',
+			fontSize : 36
+		},
+		shadow : {
+			color : 'gray',
+			offset : {
+				width : 1,
+				height : 1
+			}
+		}
+	}
 });
 
 //creates tab2 to open favWindow/Favorites page
@@ -231,16 +160,20 @@ var detailPage = function(labels) {
 	infoWindow.title = labels.title;
 	//Important console.log to track the movement of API data
 	//console.log('Line 61: ' + labels.zipcode);
+
 	backButton.addEventListener('click', function() {
 		tabGroup.close();
-		timeBox.remove(timeLabel);
+		dayBox.remove(dayLabel);
 		photoBox.remove(photoView);
+		dataBackground.remove(saveButton);
+		dataBackground.remove(mapsButton);
+		dataBackground.remove(ticketsButton);
 		saveButton.remove(saved);
 		saveButton.add(attending);
 		check.remove(checked);
-		addressView.remove(venueLabel);
-		addressView.remove(addressLabel);
-		addressView.remove(cityLabel);
+		dataBackground.remove(venueLabel);
+		addressClick.remove(addressLabel);
+		addressClick.remove(cityLabel);
 		dataBackground.remove(descripLabel);
 
 		//tabgrou remove all children
@@ -252,17 +185,113 @@ var detailPage = function(labels) {
 		// }
 
 	});
-	timeBox.add(backButton);
+	dayBox.add(backButton);
+
+	//Save button starts
+	var saveButton = Ti.UI.createButton({
+		backgroundImage : 'img/box2.png',
+		top : '12%',
+		width : '32%',
+		height : '8%',
+		right : '9%'
+	});
+
+	var check = Ti.UI.createImageView({
+		image : 'img/check2.png'
+	});
+	saveButton.add(check);
+
+	var attending = Ti.UI.createLabel({
+		text : "I'm Attending",
+		color : 'white',
+		font : {
+			fontWeight : 'bold',
+			fontSize : '20dp'
+		},
+		right : '10%'
+	});
+	saveButton.add(attending);
+	//save button ends
+
+	//open in Maps starts
+	var mapsButton = Ti.UI.createButton({
+		backgroundImage : 'img/box2.png',
+		top : '20.25%',
+		width : '32%',
+		height : '8%',
+		right : '9%'
+	});
+
+	var mapIcon = Ti.UI.createImageView({
+		image : 'img/map2.png',
+		height : '50%',
+		width : '15%',
+		left : '7%'
+	});
+	mapsButton.add(mapIcon);
+
+	var map = Ti.UI.createLabel({
+		text : "Open Map",
+		color : 'white',
+		font : {
+			fontWeight : 'bold',
+			fontSize : '20dp'
+		},
+		right : '20%'
+	});
+	mapsButton.add(map);
+	//open in maps ends
+
+	//ticket button starts
+	var ticketsButton = Ti.UI.createButton({
+		backgroundImage : 'img/box2.png',
+		top : '28.5%',
+		width : '32%',
+		height : '8%',
+		right : '9%'
+	});
+
+	var tixIcon = Ti.UI.createImageView({
+		image : 'img/ticket2.png',
+		height : '69%',
+		width : '23%',
+		left : '5%'
+	});
+	ticketsButton.add(tixIcon);
+
+	var tickets = Ti.UI.createLabel({
+		text : "Tickets",
+		color : 'white',
+		font : {
+			fontWeight : 'bold',
+			fontSize : '20dp'
+		},
+		right : '27%'
+	});
+	ticketsButton.add(tickets);
+	//ticket button ends
+
+	var dayLabel = Ti.UI.createLabel({
+		text : labels.day + ' @' + labels.venue,
+		color : 'white',
+		top : '25%',
+		//width: '80%',
+		font : {
+			fontSize : '30dp'
+		},
+		width : '80%',
+		textAlign : 'center'
+	});
+	dayBox.add(dayLabel);
 
 	var timeLabel = Ti.UI.createLabel({
 		text : labels.time,
 		color : 'white',
-		top : '40%',
+		top : '21%',
 		font : {
 			fontSize : '30dp'
 		},
 	});
-	timeBox.add(timeLabel);
 
 	var photoView = Ti.UI.createImageView({
 		image : labels.photo,
@@ -286,6 +315,7 @@ var detailPage = function(labels) {
 	});
 
 	saveButton.addEventListener('click', function() {
+		//console.log('Line 289: '+ labels.photo);
 		var dialog = Ti.UI.createAlertDialog({
 			confirm : 0,
 			buttonNames : ['Save', 'Cancel'],
@@ -296,6 +326,7 @@ var detailPage = function(labels) {
 			if (e.index === e.source.confirm) {
 				var saveData = {
 					title : labels.title,
+					day : dayLabel.text,
 					time : timeLabel.text,
 					photo : labels.photo,
 					venue : venueLabel.text,
@@ -316,7 +347,7 @@ var detailPage = function(labels) {
 	});
 	dataBackground.add(saveButton);
 	//End saveButton clickEvent
-	
+
 	favourites.add(SQLite.favTable);
 
 	//Start mapsButton clickEvent
@@ -359,13 +390,6 @@ var detailPage = function(labels) {
 	//End ticketsButton clickEvent
 
 	//Start forming address for display
-	var addressView = Ti.UI.createView({
-		height : 'auto',
-		width : 'auto',
-		layout : 'vertical',
-		top : '29%'
-	});
-
 	var venueLabel = Ti.UI.createLabel({
 		text : labels.venue,
 		color : 'black',
@@ -373,37 +397,63 @@ var detailPage = function(labels) {
 			fontSize : '20dp',
 			fontWeight : 'bold'
 		},
+		top : '45%',
 		left : '3%'
 	});
-	addressView.add(venueLabel);
+	dataBackground.add(venueLabel);
+
+	var addressClick = Ti.UI.createButton({
+		height : 'auto',
+		width : 'auto',
+		layout : 'vertical',
+		top : '47.5%',
+		left : '3%'
+	});
+
+	addressClick.addEventListener('click', function() {
+		var geoLocation = (require('geo').getLocation());
+		console.log('Line 250: ' + geoLocation);
+		var dialog = Ti.UI.createAlertDialog({
+			confirm : 0,
+			buttonNames : ['Open', 'Cancel'],
+			message : 'Would you like to open Maps?',
+			title : 'Open in Maps'
+		});
+		dialog.addEventListener('click', function(e) {
+			if (e.index === e.source.confirm) {
+				Ti.Platform.openURL("http://maps.apple.com/?saddr=" + geoLocation + "&daddr=" + labels.address + " " + labels.city + ", " + labels.state + " " + labels.zipcode + "");
+			}
+		});
+		dialog.show();
+	});
 
 	var addressLabel = Ti.UI.createLabel({
 		text : labels.address,
-		color : 'black',
+		color : 'blue',
 		font : {
 			fontSize : '20dp'
 		},
-		left : '3%'
+		left : '0%'
 	});
-	addressView.add(addressLabel);
+	addressClick.add(addressLabel);
 
 	var cityLabel = Ti.UI.createLabel({
-		text : labels.city + labels.state + " " + labels.zipcode,
-		color : 'black',
+		text : labels.city + ", " + labels.state + " " + labels.zipcode,
+		color : 'blue',
 		font : {
 			fontSize : '20dp'
 		},
-		left : '3%'
+		left : '0%'
 	});
-	addressView.add(cityLabel);
+	addressClick.add(cityLabel);
 
-	dataBackground.add(addressView);
+	dataBackground.add(addressClick);
 	//Start forming address for display
 
 	var descripLabel = Ti.UI.createLabel({
 		text : labels.descrip,
 		color : 'black',
-		top : '40%',
+		top : '60%',
 		left : '3%',
 		font : {
 			fontSize : '20dp',

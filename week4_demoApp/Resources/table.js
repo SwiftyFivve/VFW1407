@@ -5,11 +5,11 @@ var tableData = [];
 var table = Ti.UI.createTableView();
 
 // var tableOptions = Ti.UI.createView({
-	// height : '765sp',
-	// width :'700sp',
-	// top : '720sp',
-	// backgroundColor : '#FAAC58',
-	// borderRadius : '10dp'
+// height : '765sp',
+// width :'700sp',
+// top : '720sp',
+// backgroundColor : '#FAAC58',
+// borderRadius : '10dp'
 // });
 
 var tableHolder = Ti.UI.createView({
@@ -23,14 +23,14 @@ var tableHolder = Ti.UI.createView({
 // console.log(getZip);
 
 // var zipButton = Ti.UI.createButton({
-	// title : 'Zip: ',
-	// height : '70sp',
-	// width : '32.5%',
-	// top : '0%',
-	// right : '0%',
-	// borderColor : 'black',
-	// borderWidth : '1dp',
-	// borderRadius : '20%'
+// title : 'Zip: ',
+// height : '70sp',
+// width : '32.5%',
+// top : '0%',
+// right : '0%',
+// borderColor : 'black',
+// borderWidth : '1dp',
+// borderRadius : '20%'
 // });
 // tableOptions.add(zipButton);
 
@@ -54,6 +54,7 @@ var runTable = function(dataObj) {
 	//organize these rows
 	var data = {
 		title : dataObj.title,
+		day : dataObj.day,
 		time : dataObj.time,
 		venue : dataObj.venue,
 		address : dataObj.address,
@@ -62,69 +63,92 @@ var runTable = function(dataObj) {
 		zipcode : dataObj.zipCode,
 		descrip : dataObj.descrip,
 		site : dataObj.site,
-		photo : dataObj.url
+		photo : dataObj.url,
+		theDay : dataObj.theDay,
+		theMonth : dataObj.theMonth,
+		theYear : dataObj.theYear
 	};
 	zipData = data.zipcode;
 	//Important console.log to track the movement of API data
-	//console.log('Line 42: '+data.site);
-	var titleRow = Ti.UI.createView({
-		width : '25%',
-		height : 'auto',
-		left : '0%',
-		top : '0%'
-	});
+	//console.log('Line 42: '+data.day);
 	var title = Ti.UI.createLabel({
 		text : data.title,
 		font : {
-			fontWight : 'bold'
+			fontSize : '20dp',
+			fontWeight : 'bold'
 		},
-		top : '40%',
-		left : '3%'
+		top : '15%',
+		left : '3%',
+		width : '50%',
+		height : '20%'
 
 	});
-	titleRow.add(title);
-	var time = Ti.UI.createLabel({
-		text : data.time,
-		top : '5%',
+
+	var theDay = Ti.UI.createLabel({
+		text : data.theDay,
+		font : {
+			fontSize : '25dp',
+			fontFamily : 'Heiti K'
+		},
+		color : 'gray',
+		right : '13%',
+		top : '15%'
 	});
-	var at = Ti.UI.createLabel({
-		text : '-At-',
-		top : '36%',
+
+	var theMonth = Ti.UI.createLabel({
+		text : data.theMonth,
+		font : {
+			fontFamily : 'Heiti K',
+			fontWeight : 'bold'
+		},
+		right : '15.5%',
+		bottom : '15%'
+	});
+
+	var theYear = Ti.UI.createLabel({
+		text : data.theYear,
+		font : {
+			fontFamily : 'Heiti K',
+		},
+		color : 'red',
+		right : '12%',
+		bottom : '15%'
+	});
+
+	var dayView = Ti.UI.createImageView({
+		image : 'img/dateT.png',
+		layout : 'vertical',
+		height : 'auto',
+		width : '10%',
+		right : '10%',
+		top : '30%'
+	});
+	var time = Ti.UI.createLabel({
+		text : 'Starts @: '+data.time,
+		font : {
+			fontFamily : 'Heiti K',
+			fontStyle : 'italic'
+		},
+		color : 'gray',
+		bottom : '5%',
+		left : '3%'
 	});
 	var venue = Ti.UI.createLabel({
 		text : data.venue,
-		bottom : '5%',
+		color : 'gray',
+		left : '3%',
+		top : '40%',
 	});
 	var arrow = Ti.UI.createImageView({
 		image : 'img/next.png',
 		top : '25%',
-		height : '40%',
+		height : '43%',
 		width : '5%',
 		right : '2%'
 	});
-	var address = Ti.UI.createLabel({
-		text : data.address,
-	});
-	var city = Ti.UI.createLabel({
-		text : data.city + ", ",
-	});
-	var state = Ti.UI.createLabel({
-		text : data.state,
-	});
-	var zipcode = Ti.UI.createLabel({
-		text : data.zipcode,
-	});
-	var descrip = Ti.UI.createLabel({
-		text : data.descrip,
-	});
-	var site = Ti.UI.createLabel({
-		text : data.site,
-	});
-	var photo = Ti.UI.createImageView({
-		img : data.photo,
-	});
+	
 	//Important console.log to track the movement of API data
-	console.log('Line 47: ' + address.text);
+	//console.log('Line 47: ' + day.text);
 
 	var row = Ti.UI.createTableViewRow({
 		className : 'row',
@@ -133,34 +157,28 @@ var runTable = function(dataObj) {
 		height : '80dp',
 		data : {
 			title : title.text,
+			day : data.day,
 			time : time.text,
 			venue : venue.text,
-			address : address.text,
-			city : city.text,
-			state : state.text,
-			zipcode : zipcode.text,
-			descrip : descrip.text,
-			site : site.text,
-			photo : photo.img
+			address : data.address,
+			city : data.city,
+			state : data.state,
+			zipcode : data.zipcode,
+			descrip : data.descrip,
+			site : data.site,
+			photo : data.photo
 		},
 	});
-	
-	//var stg = data.time.split
-	
-	row.add(titleRow);
-	row.hide(title);
+
+	row.add(title);
+	row.add(theDay);
+	row.add(theMonth);
+	row.add(theYear);
+	row.add(dayView);
 	row.add(time);
 	row.add(venue);
-	row.hide(address);
-	row.hide(city);
-	row.hide(state);
-	row.hide(zipcode);
-	row.hide(descrip);
-	row.hide(site);
-	row.add(photo);
-	row.add(at);
 	row.add(arrow);
-	
+
 	tableData.push(row);
 	settingTable();
 };
@@ -170,7 +188,7 @@ var infoPage = require('infoPage');
 table.addEventListener('click', function(e) {
 	var labels = e.rowData.data;
 	//Important console.log to track the movement of API data
-	//console.log(e.rowData.data.address);
+	console.log(e.rowData.data.day);
 	infoPage.detailPage(labels);
 });
 

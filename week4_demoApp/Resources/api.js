@@ -12,60 +12,86 @@ var runApi = function(zip, miles) {
 
 			var photo = events[i].image;
 			var date = events[i].start_time;
+			console.log('Line 15: '+ date);
+
 			var dataObj = {
-				title : events[i].title,
-				time : events[i].start_time,
-				venue : events[i].venue_name,
-				address : events[i].venue_address,
-				city : events[i].city_name,
-				state : events[i].region_abbr,
-				zipCode : events[i].postal_code,
-				descrip : events[i].description,
-				site : events[i].url,
-				url : null
-			};
-			//Important console.log to track the movement of API data
-			// console.log("Line 26: "+dataObj.address);
-			//grab the photos real URL
-			if (photo === null) {
-				dataObj.url = '/img/noImage.png';
-			} else {
-				dataObj.url = photo.medium.url;
-			}
+			title : events[i].title,
+			time : events[i].start_time,
+			day : events[i].start_time,
+			venue : events[i].venue_name,
+			address : events[i].venue_address,
+			city : events[i].city_name,
+			state : events[i].region_abbr,
+			zipCode : events[i].postal_code,
+			descrip : events[i].description,
+			site : events[i].url,
+			theMonth: null,
+			theDay: null,
+			theYear: null, 
+			url :null
+		};
 
-			var formatDate = function(date) {
-				var arr = date.split(/[- :" "]/), // from your example var date = "2012-11-14T06:57:36+0000";
-				date = new Date(arr[0], arr[1] - 1, arr[2], arr[3], arr[4], 00);
-				newDate = date.toString("MMMM");
-				//change time!!
-				var newTime = new Date(newDate);
-				dataObj.time = newDate;
-				//console.log('Line 38: '+newDate);
-				//console.log('Line 39: '+newTime);
-			};
+		//format the date
+		var formatDate = function(date) {
+			var theDate = date.split(" ");
+			var dateFormat = new Date();
+			var theDay = dateFormat.toLocaleDateString(theDate[0]);
+			var theDay2 = dateFormat.toLocaleDateString(theDate[0]);
+			var theTime = dateFormat.toLocaleTimeString(theDate[1]);
+			var theTime2 = dateFormat.toLocaleTimeString(theDate[1]);
+
+			dataObj.time = theTime;
+			dataObj.day = theDay;
+			//look at old code on gitHub
+		};
+		formatDate(date);
+
+		//separate the date for row view
+		var dayData = dataObj.day;
+		var formatTableDate = function(dayData) {
+			var theDate = dayData.split(" ");
 			
-			formatDate(date);
+			var month = theDate[0];
+			dataObj.theMonth = month.slice(0, 3);
+			var day = theDate[1];
+			var daySplit = day.split(",");
+			dataObj.theDay = daySplit[0];
+			
+			var year = theDate[2];
+			dataObj.theYear = year.slice(2, 5);
+		};
+		formatTableDate(dayData);
+		console.log('Line 62: '+dataObj.theYear);
 
-			table.runTable(dataObj);
+		//grab the photos real URL
+		if (photo === null) {
+			dataObj.url = '/img/noImage.png';
+		} else {
+			dataObj.url = photo.medium.url;
 		}
-	};
-	//Remote info and request
-	var remoteError = function(e) {
-		Ti.API.debug("Status: " + this.status);
-		Ti.API.debug("Text: " + this.responseText);
-		Ti.API.debug("Error: " + e.error);
-		alert("There was a problem pulling remote data.");
-	};
 
-	var xhr = Ti.Network.createHTTPClient({
-		onload : remoteResponse,
-		onerror : remoteError,
-		timeout : 8000
-	});
+		table.runTable(dataObj);
+		//Important console.log to track the movement of API data
+		//console.log("Line 53: " + dataObj.day);
+	}
+};
+//Remote info and request
+var remoteError = function(e) {
+	Ti.API.debug("Status: " + this.status);
+	Ti.API.debug("Text: " + this.responseText);
+	Ti.API.debug("Error: " + e.error);
+	alert("There was a problem pulling remote data.");
+};
 
-	// console.log("Line 41: Miles = " + miles);
-	xhr.open("GET", "http://api.eventful.com/json/events/search?app_key=6nQMfRdCKT9Stx3P&q=music&l=" + zip + "&within=" + miles + "&units=miles");
-	xhr.send();
+var xhr = Ti.Network.createHTTPClient({
+	onload : remoteResponse,
+	onerror : remoteError,
+	timeout : 8000
+});
+
+// console.log("Line 41: Miles = " + miles);
+xhr.open("GET", "http://api.eventful.com/json/events/search?app_key=6nQMfRdCKT9Stx3P&q=music&l=" + zip + "&within=" + miles + "&units=miles");
+xhr.send();
 };
 
 exports.runApi = runApi;
